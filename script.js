@@ -1,7 +1,3 @@
-let userName = prompt ("What is your name")
-let userScore = 0
-let computerScore = 0
-
 
 function getComputerChoice(){
     let result = Math.random() * 3
@@ -18,91 +14,112 @@ function getComputerChoice(){
     }
 };
 
-function getHumanChoice(){
-    return prompt("rock! paper!! scissors!!!");
-}
+const choice = document.querySelector("#choice")
 
-function playRound(){
-     let humanChoice = getHumanChoice().toLowerCase()
-     let computerChoice = getComputerChoice()
+spanText = document.createElement("span")
+result = document.querySelector("#result")
+const finalText = document.createElement("span")
+const final = document.querySelector("#final")
 
-    if (computerChoice == "rock"){
-        if (humanChoice == "rock"){
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n rock cancels rock!`}
-        else if (humanChoice == "paper"){
-            userScore = userScore + 1
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n paper beats rock \n ${userName} wins!!`
+let computerScore = 0
+let playerScore = 0
+
+function playRound(human){
+    if (playerScore < 5 && computerScore < 5) {
+
+        let computerChoice = getComputerChoice()
+        let humanChoice = human
+
+        if (computerChoice == "rock"){
+            if (humanChoice == "rock"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Tie!!`
+                choice.appendChild(divText)
+            }
+                
+            else if (humanChoice == "paper"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Player wins!!`
+                choice.appendChild(divText)
+                playerScore++
+            }
+            else if (humanChoice == "scissors"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Computer wins!!`
+                choice.appendChild(divText)
+                computerScore++
+            }
+            
         }
-        else if (humanChoice == "scissors")
-             {
-            computerScore = computerScore +1
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n rock beats scissors \n Computer wins!!`
+
+        else if (computerChoice == "paper"){
+            if (humanChoice == "paper"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Tie!!`
+                choice.appendChild(divText)
+            }
+            else if (humanChoice == "scissors"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Player wins!!`
+                choice.appendChild(divText)
+                playerScore++
+            }
+            else if (humanChoice == "rock"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Computer wins!!`
+                choice.appendChild(divText)
+                computerScore++
+            }
+                
         }
-        else{
-            return `Dear ${userName}, kindly use a valid input`
+
+        else {
+            if (humanChoice == "scissors"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Tie!!`
+                choice.appendChild(divText)
+            }
+            else if (humanChoice == "rock"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Player wins!!`
+                choice.appendChild(divText)
+                playerScore++
+            }
+            else if (humanChoice == "paper"){
+                const divText = document.createElement("div")
+                divText.textContent = `Computer: ${computerChoice}, Player: ${humanChoice}, Computer wins!!`
+                choice.appendChild(divText)
+                computerScore++
+            }
+            
+        } 
+
+        spanText.textContent = `Computer: ${computerScore}, Player: ${playerScore}` 
+        result.appendChild(spanText) 
+
+        if (playerScore === 5 || computerScore === 5){
+            if (playerScore > computerScore){
+                spanText.textContent = `End of Round, Player wins!! ${playerScore}-${computerScore}` 
+                result.appendChild(spanText)
+            }
+            else{
+                spanText.textContent = `End of Round, Computer wins!! ${computerScore}-${playerScore}` 
+                result.appendChild(spanText)
+            }
         }
         
+            
+        
+    } 
+    else{
+        finalText.textContent = "Kindly reload to play another round"
+        final.appendChild(finalText)
     }
-
-   else if (computerChoice == "paper"){
-        if (humanChoice == "paper"){
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n paper cancels paper!`}
-        else if (humanChoice == "scissors"){
-            userScore = userScore + 1
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n scissors beats paper \n ${userName} wins!!`
-        }
-        else if (humanChoice == "rock")
-            {
-            computerScore = computerScore +1
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n paper beats rock \n Computer wins!!`
-        }
-        else{
-            return `Dear ${userName}, kindly use a valid input`
-        }
-        
-        
-    }
-
-     else;
-     {
-        if (humanChoice == "scissors"){
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n scissors cancels scissors!`}
-        else if (humanChoice == "rock"){
-            userScore = userScore + 1
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n rock beats scissors \n ${userName} wins!!`
-        }
-        else if (humanChoice == "paper")
-            {
-            computerScore = computerScore +1
-            return `\n ${userName}: ${humanChoice} \n Computer: ${computerChoice} \n scissors beats paper \n Computer wins!!`
-        }
-        else{
-            return `Dear ${userName}, kindly use a valid input`
-        }
-        
-        
-    }
 }
-
-function playGame() {
-    console.log(`Round 1 ${playRound()}`)
-    console.log(`Round 2 ${playRound()}`)
-    console.log(`Round 3 ${playRound()}`)
-    console.log(`Round 4 ${playRound()}`)
-    console.log(`Round 5 ${playRound()}`)
-
-}
-
-
-playGame()
-
-console.log(`Final Score: \n ${userName}: ${userScore} \n Computer: ${computerScore}`)
-if (userScore > computerScore) {
-    console.log(`You win!!`)
-}
-else if (userScore === computerScore){
-    console.log(`Game ends in a tie!!`)
-}
-else{
-    console.log("Computer wins!!")
-}
+const buttons = document.querySelectorAll("button");
+buttons.forEach(button => {
+button.addEventListener("click", () => {
+const playerChoice = button.textContent.toLowerCase();
+playRound(playerChoice);
+});
+});
